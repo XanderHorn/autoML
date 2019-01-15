@@ -535,6 +535,7 @@ if(length(remove) > 0){
   }
 }
 
+eda <- subset(eda, eda$Feature %in% names(train))                                    
 rm("remove")
 
 numFeats <- subset(eda, eda$Class %in% c("numeric","integer"))$Feature
