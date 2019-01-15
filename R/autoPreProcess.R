@@ -73,6 +73,7 @@ verbose = TRUE){
   library(ranger)
   library(stringr)
   library(tm)
+  library(sqldf)
 
 if(is.null(target) == FALSE){
   if(!target %in% names(train)){
