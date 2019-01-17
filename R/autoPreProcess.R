@@ -74,6 +74,7 @@ verbose = TRUE){
   library(stringr)
   library(tm)
   library(sqldf)
+  library(lubridate)
 
 if(is.null(target) == FALSE){
   if(!target %in% names(train)){
@@ -522,21 +523,21 @@ if(length(charFeats) > 0){
   }
 }
 
-remove <- names(train)[which(sapply(train, function(x) length(unique(x))) == 1)]
-train <- train[,setdiff(names(train), remove)]
-eda <- subset(eda, eda$Feature %in% names(train))
+#remove <- names(train)[which(sapply(train, function(x) length(unique(x))) == 1)]
+#train <- train[,setdiff(names(train), remove)]
+#eda <- subset(eda, eda$Feature %in% names(train))
 
-if(length(remove) > 0){
-  for(i in 1:length(remove)){
-    ind <- names(train)[grep(remove[i], names(train))]
-    if(length(ind) > 0){
-      train <- train[,setdiff(names(train), ind)]
-    }
-  }
-}
+#if(length(remove) > 0){
+#  for(i in 1:length(remove)){
+#    ind <- names(train)[grep(remove[i], names(train))]
+#    if(length(ind) > 0){
+#      train <- train[,setdiff(names(train), ind)]
+#    }
+#  }
+#}
 
 eda <- subset(eda, eda$Feature %in% names(train))                                    
-rm("remove")
+#rm("remove")
 
 numFeats <- subset(eda, eda$Class %in% c("numeric","integer"))$Feature
 catFeats <- subset(eda, eda$Class == "character" & eda$Type != "Text")$Feature
