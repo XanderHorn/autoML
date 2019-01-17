@@ -370,7 +370,7 @@ if(formatFeatures == TRUE){
     code[length(code$code), 1] <- "DateTimeFormat"
 
     for(i in 1:length(toFormat_date)){
-      code[length(code$code) + 1, 2] <- paste0("x[,'",toFormat_date[i],"'] <- as.character(x[,'",toFormat_date[i],"'])")
+      code[length(code$code) + 1, 2] <- paste0("x[,'",toFormat_date[i],"'] <- as_datetime(x[,'",toFormat_date[i],"'])")
       code[length(code$code), 1] <- "DateTimeFormat"
     }
   }
