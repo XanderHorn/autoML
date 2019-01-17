@@ -66,6 +66,7 @@ autoML <- function(train,
   library(caret)
   library(ranger)
   library(stringr)
+  library(lubridate)
   library(tm)
 
   if(missing(train)){
