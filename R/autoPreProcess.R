@@ -228,7 +228,7 @@ verbose = TRUE){
         code[length(code$code) + 1, 2] <- "# ************************************************** "
         code[length(code$code) + 1, 2] <- "# ****** ENCODING OF INCORRECT MISSING VALUES ****** "
         code[length(code$code) + 1, 2] <- "# ************************************************** "
-        tempCode <- data.frame(section = "MissingEncode", code = do.call(rbind, train$code))
+        tempCode <- data.frame(section = "Other", code = do.call(rbind, train$code))
         code <- rbind(code, tempCode)
       }
     }
@@ -307,7 +307,7 @@ verbose = TRUE){
       code[length(code$code) + 1, 2] <- "# ******************************************** "
       code[length(code$code) + 1, 2] <- "# ****** FORMATTING OF INTEGER FEATURES ****** "
       code[length(code$code) + 1, 2] <- "# ******************************************** "
-      code[length(code$code), 1] <- "IntegerFormat"
+      code[length(code$code), 1] <- "Other"
       
       for(i in 1:length(toFormat_int)){
         code[length(code$code) + 1, 2] <- paste0("x[,'",toFormat_int[i],"'] <- as.integer(x[,'",toFormat_int[i],"'])")
@@ -322,7 +322,7 @@ verbose = TRUE){
       code[length(code$code) + 1, 2] <- "# ******************************************** "
       code[length(code$code) + 1, 2] <- "# ****** FORMATTING OF NUMERIC FEATURES ****** "
       code[length(code$code) + 1, 2] <- "# ******************************************** "
-      code[length(code$code), 1] <- "NumericFormat"
+      code[length(code$code), 1] <- "Other"
       
       for(i in 1:length(toFormat_num)){
         code[length(code$code) + 1, 2] <- paste0("x[,'",toFormat_num[i],"'] <- as.numeric(x[,'",toFormat_num[i],"'])")
@@ -337,7 +337,7 @@ verbose = TRUE){
       code[length(code$code) + 1, 2] <- "# ********************************************** "
       code[length(code$code) + 1, 2] <- "# ****** FORMATTING OF CHARACTER FEATURES ****** "
       code[length(code$code) + 1, 2] <- "# ********************************************** "
-      code[length(code$code), 1] <- "CharacterFormat"
+      code[length(code$code), 1] <- "Other"
       
       for(i in 1:length(toFormat_char)){
         code[length(code$code) + 1, 2] <- paste0("x[,'",toFormat_char[i],"'] <- as.character(x[,'",toFormat_char[i],"'])")
@@ -352,7 +352,7 @@ verbose = TRUE){
       code[length(code$code) + 1, 2] <- "# ****************************************** "
       code[length(code$code) + 1, 2] <- "# ****** FORMATTING OF INT64 FEATURES ****** "
       code[length(code$code) + 1, 2] <- "# ****************************************** "
-      code[length(code$code), 1] <- "Integer64Format"
+      code[length(code$code), 1] <- "Other"
       
       for(i in 1:length(toFormat_int64)){
         code[length(code$code) + 1, 2] <- paste0("x[,'",toFormat_int64[i],"'] <- as.character(x[,'",toFormat_int64[i],"'])")
@@ -366,7 +366,7 @@ verbose = TRUE){
       code[length(code$code) + 1, 2] <- "# ********************************************** "
       code[length(code$code) + 1, 2] <- "# ****** FORMATTING OF DATE/TIME FEATURES ****** "
       code[length(code$code) + 1, 2] <- "# ********************************************** "
-      code[length(code$code), 1] <- "DateTimeFormat"
+      code[length(code$code), 1] <- "Other"
       
       for(i in 1:length(toFormat_date)){
         train[,toFormat_date[i]] <- suppressWarnings(as_datetime(train[,toFormat_date[i]]))
@@ -385,7 +385,7 @@ verbose = TRUE){
     code[length(code$code) + 1, 2] <- "# ***************************************** "
     code[length(code$code) + 1, 2] <- "# ****** FORMATTING OF TEXT FEATURES ****** "
     code[length(code$code) + 1, 2] <- "# ***************************************** "
-    code[length(code$code), 1] <- "TextFormat"
+    code[length(code$code), 1] <- "Other"
     
     for(i in 1:length(toFormat_char)){
       code[length(code$code) + 1, 2] <- paste0("x[,'",toFormat_char[i],"'] <- toupper(gsub(' ','',trimws(gsub('[^[:alnum:]]','',x[,'",toFormat_char[i],"']))))")
@@ -628,10 +628,13 @@ verbose = TRUE){
     
     train <- train[,setdiff(names(train), catFeats)]
   }
-  
-  
+
+  fastEDA <- fastEDA(x = train, numChars = numChars)
+
+  indicators <- which(fastEDA$Type == "Indicator")
+  numFeats <- setdiff(numFeats, indicators)
+ 
   code$section <- ifelse(is.na(code$section) == TRUE, "Other", code$section)
-  
   
   if(length(numFeats) > 0 & is.null(target) == FALSE){
     if(featureTransformations == TRUE){
@@ -650,7 +653,6 @@ verbose = TRUE){
       rm("trsfm")
     }
   }
-  
   
   if((featureTransformations == TRUE | length(catFeats) > 0) & is.null(target) == FALSE){
     cat("autoPreProcess | Selecting best feature solution \n")
@@ -748,14 +750,6 @@ verbose = TRUE){
     train <- train[,setdiff(names(train), remove)]
     
   }
-                                      
-  eda <- fastEDA(x = train, numChars = numChars)
-
-  remove <- as.character(eda[which(eda$Constant == 1),1])
-  train <- train[,setdiff(names(train), remove)]
-
-  remove <- as.character(eda[which(eda$AllMissing == 1),1])
-  train <- train[,setdiff(names(train), remove)]
   
   if(removeIDFeatures == TRUE){
     train <- train[,setdiff(names(train), id)]
