@@ -544,6 +544,10 @@ verbose = TRUE){
   catFeats <- subset(eda, eda$Class == "character" & eda$Type != "Text")$Feature
   oneHot <- eda[which(eda$Type == "Categorical" & eda$Unique < catFeatMaxLevels),1]
   catFeats <- setdiff(catFeats, oneHot)
+
+  fastEDA <- fastEDA(x = train, numChars = numChars)
+  indicators <- as.character(fastEDA[which(fastEDA$Type == "Indicator"), "Feature"])
+  numFeats <- setdiff(numFeats, indicators)
   
   if(length(numFeats) > 0){
     cat("autoPreProcess | Scaling relevant features \n")
@@ -628,11 +632,6 @@ verbose = TRUE){
     
     train <- train[,setdiff(names(train), catFeats)]
   }
-
-  fastEDA <- fastEDA(x = train, numChars = numChars)
-
-  indicators <- which(fastEDA$Type == "Indicator")
-  numFeats <- setdiff(numFeats, indicators)
  
   code$section <- ifelse(is.na(code$section) == TRUE, "Other", code$section)
   
@@ -786,6 +785,5 @@ verbose = TRUE){
     
     return(list(data = train,
                 dataSummary = eda))
-  }
-  
+  } 
 }
