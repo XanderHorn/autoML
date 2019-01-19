@@ -748,6 +748,14 @@ verbose = TRUE){
     train <- train[,setdiff(names(train), remove)]
     
   }
+                                      
+  eda <- fastEDA(x = train, numChars = numChars)
+
+  remove <- as.character(eda[which(eda$Constant == 1),1])
+  train <- train[,setdiff(names(train), remove)]
+
+  remove <- as.character(eda[which(eda$AllMissing == 1),1])
+  train <- train[,setdiff(names(train), remove)]
   
   if(removeIDFeatures == TRUE){
     train <- train[,setdiff(names(train), id)]
