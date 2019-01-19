@@ -11,7 +11,7 @@
 #' @param minLevelPercentage [numeric | optional] Used to identify low proportional categorical levels. Default of 0.025
 #' @param minUnique [integer | Optional] Used to identify feature classes, dictates between numeric and character features. Default of 25
 #' @param minChrPercentage [numeric | Optional] Used to identify incorrectly formatted numeric or integer features as character features. Default of 0.2
-#' @param numChars [integer | Optional] Used to identify text features, note that text features are not the same as character features. Text features containg multiple paragraphs of text. Default of 25
+#' @param numChars [integer | Optional] Used to identify text features, note that text features are not the same as character features. Text features containg multiple paragraphs of text. Default of 40
 #' @param seed [integer | Optional] Random seed number for reproducable results. Default of 1991
 #' @param progress [logical | Optional] Display a progress bar if TRUE
 #'
@@ -31,7 +31,7 @@ exploreData <- function(x,
 						minLevelPercentage = 0.025,
 						minUnique = 25,
 						minChrPercentage = 0.2,
-						numChars = 25, # To detect text features
+						numChars = 40,
 						seed = 1428571,
 						progress = TRUE){
 
