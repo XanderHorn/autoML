@@ -352,7 +352,7 @@ for(i in 1:nrow(results)){
                     ylab(metric$id)
 
       if(verbose == TRUE){
-        cat("autoLearn |",results[i, "TrainMode"]," ",modName,"tuned and trained \n")
+        cat("autoLearn |",as.character(results[i, "TrainMode"])," ",modName,"tuned and trained \n")
       }
 
 
@@ -364,7 +364,7 @@ for(i in 1:nrow(results)){
     model$model <- mlr::train(learner = mod, task = trainTask)
 
     if(verbose == TRUE){
-      cat("autoLearn |",results[i, "TrainMode"]," ",modName,"trained \n")
+      cat("autoLearn |",as.character(results[i, "TrainMode"])," ",modName,"trained \n")
     }
 
   }
