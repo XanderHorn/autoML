@@ -174,7 +174,6 @@ verbose = TRUE){
   
   formats <- searchFeatFormatting(x = train,
                                   seed = seed)
-  #exclude <- as.character(formats[which(formats$RecommendedClass == "Date"),1])
   int64 <- names(train)[which(formats$OriginalClass == "integer64")]
   if(length(int64) > 0){
     for(i in 1:length(int64)){
@@ -232,10 +231,8 @@ verbose = TRUE){
         code <- rbind(code, tempCode)
       }
     }
-    
     train <- train$data
   }
-  
   
   eda <- fastEDA(x = train, numChars = numChars)
   
@@ -275,17 +272,17 @@ verbose = TRUE){
   removed <- unique(as.character(eda[which(eda$Duplicated == 1 | eda$Constant == 1 | eda$AllMissing == 1),1]))
   
   if(length(removed) > 0){
-    newFeatureSpace <- setdiff(names(train), removed)
-    
-    if(length(newFeatureSpace) > length(removed)){
-      removed <- paste0(paste0("'", removed), "'", collapse = ",")
-      code[length(code$code) + 1, 2] <- paste0("x <- x[,setdiff(names(x), c(", removed, "))]")
-      code[length(code$code) + 1, 2] <- "\n"
-    } else {
-      newFeatureSpace <- paste0(paste0("'", newFeatureSpace), "'", collapse = ",")
-      code[length(code$code) + 1, 2] <- paste0("x <- x[,setdiff(names(x), c(", newFeatureSpace, "))]")
-      code[length(code$code) + 1, 2] <- "\n"
-    }
+  #  newFeatureSpace <- setdiff(names(train), removed)
+  #  
+  #  if(length(newFeatureSpace) > length(removed)){
+  #    removed <- paste0(paste0("'", removed), "'", collapse = ",")
+  #    code[length(code$code) + 1, 2] <- paste0("x <- x[,setdiff(names(x), c(", removed, "))]")
+  #    code[length(code$code) + 1, 2] <- "\n"
+  #  } else {
+  #    newFeatureSpace <- paste0(paste0("'", newFeatureSpace), "'", collapse = ",")
+  #    code[length(code$code) + 1, 2] <- paste0("x <- x[,setdiff(names(x), c(", newFeatureSpace, "))]")
+  #    code[length(code$code) + 1, 2] <- "\n"
+  #  }
     eda <- subset(eda, eda$Feature %in% names(train))
   }
   
@@ -429,17 +426,17 @@ verbose = TRUE){
   removed <- unique(as.character(eda[which(eda$Duplicated == 1 | eda$Constant == 1 | eda$AllMissing == 1),1]))
   
   if(length(removed) > 0){
-    newFeatureSpace <- setdiff(names(train), removed)
+    #newFeatureSpace <- setdiff(names(train), removed)
     
-    if(length(newFeatureSpace) > length(removed)){
-      removed <- paste0(paste0("'", removed), "'", collapse = ",")
-      code[length(code$code) + 1, 2] <- paste0("x <- x[,setdiff(names(x), c(", removed, "))]")
-      code[length(code$code) + 1, 2] <- "\n"
-    } else {
-      newFeatureSpace <- paste0(paste0("'", newFeatureSpace), "'", collapse = ",")
-      code[length(code$code) + 1, 2] <- paste0("x <- x[,setdiff(names(x), c(", newFeatureSpace, "))]")
-      code[length(code$code) + 1, 2] <- "\n"
-    }
+    #if(length(newFeatureSpace) > length(removed)){
+    #  removed <- paste0(paste0("'", removed), "'", collapse = ",")
+    #  code[length(code$code) + 1, 2] <- paste0("x <- x[,setdiff(names(x), c(", removed, "))]")
+    #  code[length(code$code) + 1, 2] <- "\n"
+    #} else {
+    #  newFeatureSpace <- paste0(paste0("'", newFeatureSpace), "'", collapse = ",")
+    #  code[length(code$code) + 1, 2] <- paste0("x <- x[,setdiff(names(x), c(", newFeatureSpace, "))]")
+    #  code[length(code$code) + 1, 2] <- "\n"
+    #}
     eda <- subset(eda, eda$Feature %in% names(train))
   }
   
@@ -548,7 +545,9 @@ verbose = TRUE){
   fastEDA <- fastEDA(x = train, numChars = numChars)
   indicators <- as.character(fastEDA[which(fastEDA$Type == "Indicator"), "Feature"])
   numFeats <- setdiff(numFeats, indicators)
-  
+  indicators <- as.character(eda[which(eda$Type == "Indicator"), "Feature"])
+  numFeats <- setdiff(numFeats, indicators)
+
   if(length(numFeats) > 0){
     cat("autoPreProcess | Scaling relevant features \n")
     scaled <- scaler(df = train, numFeats = numFeats, autoCode = autoCode)
