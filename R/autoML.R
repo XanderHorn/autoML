@@ -160,6 +160,7 @@ autoML <- function(train,
 
   }
 
-  return(list(trainedModels = models$trainedModels,
+  return(list(data = ready$data,
+              trainedModels = models$trainedModels,
               result = models$results))
 }
