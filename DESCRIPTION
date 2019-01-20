@@ -1,6 +1,6 @@
 Package: autoML
 Title: Automated machine learning
-Version: 0.0.0.9000
+Version: 1.0.0.0
 Authors@R: person("Xander", "Horn", email = "xanderhorn@hotmail.com", role = c("aut", "cre"))
 Description: Automated machine learning, feature engineering and data cleaning
 Depends: R (>= 3.5.1)
