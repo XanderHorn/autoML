@@ -780,9 +780,17 @@ verbose = TRUE){
     train <- train[,setdiff(names(train), id)]
   }
 
+  cat("autoPreProcess | Checking data \n")
   tempEda <- fastEDA(train, numChars = numChars)
-  ind <- as.character(tempEda[which(tempEda$Constant == 1), "Feature"])
-  train <- train[,setdiff(names(train), ind)]
+
+  remove <- as.character(tempEda[which(tempEda$Constant == 1),1])
+  train <- train[,setdiff(names(train), remove)]
+
+  remove <- as.character(tempEda[which(tempEda$AllMissing == 1),1])
+  train <- train[,setdiff(names(train), remove)]
+
+  remove <- as.character(tempEda[which(tempEda$Missing > 0),1])
+  train <- train[,setdiff(names(train), remove)]
   
   if(autoCode == TRUE){
     code[length(code$code) + 1, 2] <- "return(x)}"
