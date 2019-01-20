@@ -9,7 +9,7 @@
 #'
 #' @examples
 #'
-fastEDA <- function(x, numChars = 100, seed = 1991){
+fastEDA <- function(x, numChars = 25, seed = 1991){
 
 	set.seed(seed)
 	x <- as.data.frame(x)
