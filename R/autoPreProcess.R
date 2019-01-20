@@ -779,6 +779,10 @@ verbose = TRUE){
   if(removeIDFeatures == TRUE){
     train <- train[,setdiff(names(train), id)]
   }
+
+  tempEda <- fastEDA(train, numChars = numChars)
+  ind <- as.character(tempEda[which(tempEda$Constant == 1), "Feature"])
+  train <- train[,setdiff(names(train, ind))]
   
   if(autoCode == TRUE){
     code[length(code$code) + 1, 2] <- "return(x)}"
