@@ -4,7 +4,7 @@
 \alias{fastEDA}
 \title{Fast exploratory data analysis}
 \usage{
-fastEDA(x, numChars = 100, seed = 1991)
+fastEDA(x, numChars = 25, seed = 1991)
 }
 \arguments{
 \item{seed}{}

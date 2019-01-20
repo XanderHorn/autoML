@@ -10,9 +10,10 @@ autoML(train, test = NULL, target = NULL, id = "auto",
   unsupervisedFeatures = TRUE, modelInterpretability = TRUE,
   trainMode = "reduced", models = "all", tuneIters = 10,
   tuneType = "random", performResampling = FALSE,
-  resampleMethod = "CV", resampleIters = 5, maxObs = 40000,
-  validationSplit = 0.3, problemType = NULL, clusters = NULL,
-  perfMetric = "auto", seed = 1991, verbose = TRUE)
+  resampleMethod = "CV", resampleIters = 5, sample = NULL,
+  maxObs = 40000, validationSplit = 0.3, problemType = NULL,
+  clusters = NULL, perfMetric = "auto", seed = 1991,
+  verbose = TRUE)
 }
 \arguments{
 \item{train}{[data.frame | Required] Dataset to perform cleaning, engineering and training of models on, should contain target feature if supervised learning should be executed}
@@ -50,6 +51,8 @@ autoML(train, test = NULL, target = NULL, id = "auto",
 \item{resampleMethod}{[character | Optional] Should resampling be performed, specifies the resampling method, options are: CV, Bootstrap}
 
 \item{resampleIters}{[integer | Optional] Number of folds or bootstrap iterations to validate the model on}
+
+\item{sample}{[numeric | Optional] Number between 0 and 1 to sample observations for faster model interpretability. Default of NULL}
 
 \item{maxObs}{[integer | Optional] Number of observations in the experiment training set on which models are trained, tuned and resampled on. Default of 40000. If the training set has less than 40k observations all will be used}
 

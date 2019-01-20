@@ -4,14 +4,13 @@
 \alias{autoPreProcess}
 \title{Automated data cleaning and feature engineering for machine learning problems}
 \usage{
-autoPreProcess(train, target = NULL, id = "auto",
-  removeDupObs = TRUE, downSample = FALSE, correctMissEncode = TRUE,
-  numMissEncode = NULL, charMissEncode = c("", " ", "UNKNOWN", "MISS",
-  "MISSING", "UNK", "NA", "NULL", "N/A"), formatFeatures = TRUE,
-  trackingFeatures = TRUE, clipOutliers = TRUE,
-  outlierMethod = "tukey", lowPercentile = 0.01, upPercentile = 0.99,
-  imputeMissing = TRUE, categoricalMinPercent = 0.025,
-  catFeatMaxLevels = 7, numChars = 100,
+autoPreProcess(train, target = NULL, id = NULL, removeDupObs = TRUE,
+  downSample = FALSE, correctMissEncode = TRUE, numMissEncode = NULL,
+  charMissEncode = c("", " ", "UNKNOWN", "MISS", "MISSING", "UNK", "NA",
+  "NULL", "N/A"), formatFeatures = TRUE, trackingFeatures = TRUE,
+  clipOutliers = TRUE, outlierMethod = "tukey", lowPercentile = 0.01,
+  upPercentile = 0.99, imputeMissing = TRUE,
+  categoricalMinPercent = 0.025, catFeatMaxLevels = 7, numChars = 60,
   featureTransformations = TRUE, featureInteractions = TRUE,
   unsupervisedFeatures = TRUE, maxUniques = 100, autoCode = TRUE,
   seed = 1991, saveCode = FALSE, removeIDFeatures = FALSE,
@@ -22,7 +21,7 @@ autoPreProcess(train, target = NULL, id = "auto",
 
 \item{target}{[character | Optional] Leave NULL if the problem is unsupervised else specify the target feature}
 
-\item{id}{[character | Optioanl] ID features are automatically detected and removed from cleaning and engieering, the dataset is also de-duplicated accoring to the ID feature(s) specified. Default of auto, which automatically searches for ID feature. For best performance specify ID features}
+\item{id}{[character | Optioanl] ID features are automatically detected and removed from cleaning and engieering, the dataset is also de-duplicated accoring to the ID feature(s) specified. Default of auto, which automatically searches for ID feature. For best performance specify ID features or leave as NULL}
 
 \item{removeDupObs}{[character | Optional] Should duplicate observations be removed using the ID features detected or specified. Default of TRUE}
 
