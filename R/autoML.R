@@ -21,7 +21,7 @@
 #' @param performResampling [logical | Optional] Should resampling be performed after tuning of the model have taken place. Default of FALSE
 #' @param resampleMethod [character | Optional] Should resampling be performed, specifies the resampling method, options are: CV, Bootstrap
 #' @param resampleIters [integer | Optional] Number of folds or bootstrap iterations to validate the model on
-#' @param sample [numeric | Optional] Number between 0 and 1 to sample observations for faster model interpretability. Default of NULL
+#' @param sample [numeric | Optional] Number between 0 and 1 to sample observations for faster model interpretability. Default of NULL which will use 1000 observations
 #' @param clusters [integer | Optional] For unsupervised problems, the number of clusters to optimize for. Default of NULL which will search for the best optimized number of clusters
 #' @param perfMetric [character | Optional] Optimization metric on which to train and validate the model. Default of NULL wuill automatically select a metric, else for avaialble metrics use the function availableMetrcs()
 #' @param maxObs [integer | Optional] Number of observations in the experiment training set on which models are trained, tuned and resampled on. Default of 40000. If the training set has less than 40k observations all will be used
@@ -53,7 +53,7 @@ autoML <- function(train,
                    performResampling = FALSE,
                    resampleMethod = "CV",
                    resampleIters = 5,
-                   sample = 0.1,
+                   sample = NULL,
                    maxObs = 40000,
                    validationSplit = 0.3,
                    problemType = NULL,
