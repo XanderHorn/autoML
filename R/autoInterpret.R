@@ -26,7 +26,7 @@ autoInterpret <- function(train,
   filename <- "Model interpretability plots.pdf"
 
   if(is.null(sample)){
-    sample <- 500 / nrow(train)
+    sample <- 1000 / nrow(train)
   } else {
     sample <- sample
   }
