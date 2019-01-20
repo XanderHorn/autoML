@@ -379,9 +379,9 @@ verbose = TRUE){
     train[,toFormat_char] <- suppressWarnings(sapply(train[,toFormat_char], function(x) toupper(gsub(" ","",trimws(gsub("[^[:alnum:]]","",x))))))
     
     code[length(code$code) + 1, 2] <- "\n"
-    code[length(code$code) + 1, 2] <- "# ***************************************** "
-    code[length(code$code) + 1, 2] <- "# ****** FORMATTING OF TEXT FEATURES ****** "
-    code[length(code$code) + 1, 2] <- "# ***************************************** "
+    code[length(code$code) + 1, 2] <- "# ***************************************************** "
+    code[length(code$code) + 1, 2] <- "# ****** TEXT MANIPULATION OF CHARACTER FEATURES ****** "
+    code[length(code$code) + 1, 2] <- "# ***************************************************** "
     code[length(code$code), 1] <- "Other"
     
     for(i in 1:length(toFormat_char)){
@@ -451,6 +451,14 @@ verbose = TRUE){
   
   if(length(textFeats) > 0){
     cat("autoPreProcess | Engineering text features \n")
+
+    tempCode <- list()
+    for(i in 1:length(textFeats)){
+      train[,textFeats[i]] <- ifelse(is.na(train[,textFeats[i]]) == TRUE, "MISSING", train[,textFeats[i]])
+
+      tempCode[[length(tempCode) + 1]] <- paste0("x[,'", textFeats[i], "'] <-  ifelse(is.na(x[,'",textFeats[i],"']) == TRUE, 'MISSING', x[,'",textFeats[i],"'])")
+
+    }
     
     text <- engineerText(x = train,
                          textFeats = textFeats,
@@ -463,15 +471,30 @@ verbose = TRUE){
       code[length(code$code) + 1, 2] <- "# ************************************** "
       code[length(code$code) + 1, 2] <- "# ****** TEXT FEATURE ENGINEERING ****** "
       code[length(code$code) + 1, 2] <- "# ************************************** "
+
+      tempCode <- data.frame(section = "TextFeats",
+                            code = do.call(rbind, tempCode))
+      code <- rbind(code, tempCode)
+
+
       tempCode <- data.frame(section = "TextFeats",
                              code = do.call(rbind, text$code))
       code <- rbind(code, tempCode)
     }
   }
   
-  
   if(length(dateFeats) > 0){
     cat("autoPreProcess | Engineering date features \n")
+
+    tempCode <- list()
+    for(i in 1:length(dateFeats)){
+
+      medVal <- as.character(median(train[,dateFeats[i]], na.rm = TRUE))
+      train[,dateFeats[i]] <- as_datetime(ifelse(is.na(train[,dateFeats[i]]) == TRUE, medVal, as.character(train[,dateFeats[i]])))
+      
+      tempCode[[length(tempCode) + 1]] <- paste0("x[,'", dateFeats[i],"'] <-  as_datetime(ifelse(is.na(x[,'",dateFeats[i],"']) == TRUE, '",medVal,"', as.character(x[,'",dateFeats[i],"'])))")
+    } 
+
     datetime <- engineerDateTime(x = train,
                                  datetimeFeats = dateFeats,
                                  autoCode = autoCode)
@@ -483,12 +506,16 @@ verbose = TRUE){
       code[length(code$code) + 1, 2] <- "# ******************************************* "
       code[length(code$code) + 1, 2] <- "# ****** DATE/TIME FEATURE ENGINEERING ****** "
       code[length(code$code) + 1, 2] <- "# ******************************************* "
+
+      tempCode <- data.frame(section = "DateFeats",
+                            code = do.call(rbind, tempCode))
+      code <- rbind(code, tempCode)
+
       tempCode <- data.frame(section = "DateFeats",
                              code = do.call(rbind, datetime$code))
       code <- rbind(code, tempCode)
     }
   }
-  
   
   if(length(toCleanFeatures) > 0){
     cat("autoPreProcess | Cleaning features \n")
