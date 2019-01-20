@@ -325,8 +325,14 @@ for(i in 1:nrow(results)){
   model <- list()
   tuneTask <- expTasks[[which(names(expTasks) == results[i, "TrainMode"])]]$task
   trainTask <- fullTasks[[which(names(fullTasks) == results[i, "TrainMode"])]]$task
+  taskName <- tolower(names(fullTasks)[which(names(fullTasks) == results[i, "TrainMode"])])
   modName <- as.character(results[i, "Model"])
   mod <- learners[[which(names(learners) == modName)]]
+  modelPlots <- list()
+
+  taskName <- ifelse(taskName == "reduced", "Reduced features",
+                ifelse(taskName == "full", "All features",
+                  ifelse(taskName == "balancedreduced", "Reduced features with balanced target", "All features with balanced target")))
 
   if(modName != "LinearRegr"){
 
@@ -345,14 +351,14 @@ for(i in 1:nrow(results)){
 
       model$model <- mlr::train(learner = mod, task = trainTask)
       model$tuneData <- generateHyperParsEffectData(tuned, partial.dep = TRUE)
-      model$plotLearningCurve <- plotLearningCurve(generateLearningCurveData(learners = mod, task = tuneTask, measures = metric)) +
+      modelPlots$LearningCurve <- plotLearningCurve(generateLearningCurveData(learners = mod, task = tuneTask, measures = metric)) +
                     ggtitle("Learning curve analysis") + 
                     theme_light() +
                     xlab("Percentage of data used for training") + 
                     ylab(metric$id)
 
       if(verbose == TRUE){
-        cat("autoLearn |",as.character(results[i, "TrainMode"])," ",modName,"tuned and trained \n")
+        cat("autoLearn |",taskName,modName,"tuned and trained \n")
       }
 
 
@@ -364,7 +370,7 @@ for(i in 1:nrow(results)){
     model$model <- mlr::train(learner = mod, task = trainTask)
 
     if(verbose == TRUE){
-      cat("autoLearn |",as.character(results[i, "TrainMode"])," ",modName,"trained \n")
+      cat("autoLearn |",taskName,modName,"trained \n")
     }
 
   }
@@ -390,7 +396,7 @@ for(i in 1:nrow(results)){
 
   if(tuneTask$task.desc$type != "cluster"){
     p.test <- predict(model$model, newdata = test[,model$model$features])
-      p.test$data$truth <- test[,target]
+    p.test$data$truth <- test[,target]
   }
 
   p.train <- predict(model$model, newdata = train[,model$model$features])
@@ -416,7 +422,7 @@ for(i in 1:nrow(results)){
   if(tuneTask$task.desc$type == "classif"){
 
       model$probCutoff <- tuned$threshold
-      model$plotCalibration <- plotCalibration(generateCalibrationData(p.train)) +
+      modelPlots$Calibration <- plotCalibration(generateCalibrationData(p.train)) +
                     theme_light() + 
                     ggtitle("Model calibration")
 
@@ -432,13 +438,13 @@ for(i in 1:nrow(results)){
               ggtitle(paste0("Test ROC Curve: ", modName)) +
               theme_light()
 
-        model$plotTrainROC <- plot1
-        model$plotTestROC <- plot2
+        modelPlots$TrainROC <- plot1
+        modelPlots$TestROC <- plot2
 
         plot <- plotThreshVsPerf(temp) +
               theme_light()
 
-        model$plotThreshold <- plot
+        modelPlots$Threshold <- plot
       }
   }
 
@@ -447,7 +453,7 @@ for(i in 1:nrow(results)){
                                       codeFrame = codeFrame,
                                       edaFrame = edaFrame)
   }
-
+  model$modelPlots <- modelPlots
   trainedModels[[i]] <- model
 }
 
