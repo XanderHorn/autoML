@@ -111,7 +111,7 @@ autoML <- function(train,
                           verbose = verbose)
 
   if(is.null(target) == FALSE){
-  	target <- make.names(target)
+    target <- make.names(target)
   }
 
   if(is.null(test) == FALSE){
@@ -160,7 +160,8 @@ autoML <- function(train,
 
   }
 
-  return(list(data = ready$data,
+  return(list(train = ready$data,
+              test = test,
               trainedModels = models$trainedModels,
               result = models$results))
 }
