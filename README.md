@@ -7,7 +7,7 @@ To download the autoML library make use of the following code lines:
 
 `install_github("XanderHorn/autoML")`
 
-For a complete tutorial on the library, please visit the wiki.
+For a complete tutorial on the library, please visit the wiki (https://github.com/XanderHorn/autoML/wiki).
 
 Note!
 
