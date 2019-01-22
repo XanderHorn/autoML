@@ -5,7 +5,7 @@
 #' @param train [data.frame | Required] Dataset to perform cleaning, engineering and training of models on, should contain target feature if supervised learning should be executed
 #' @param test [data.frame | Optional] Optional testing set to validate models on. If none is provided, one will be created internally. Default of NULL
 #' @param target [character | Optional] If a target is provided classification or regression models will be trained, if left as NULL unsupervised models will be trained. Default of NULL
-#' @param id [character | Optioanl] ID features are automatically detected and removed from cleaning and engieering, the dataset is also de-duplicated accoring to the ID feature(s) specified. Default of auto, which automatically searches for ID feature. For best performance specify ID features
+#' @param id [character | Optioanl] ID features are automatically detected and removed from cleaning and engieering, the dataset is also de-duplicated accoring to the ID feature(s) specified. Default of NULL which will not de-duplicate, options are NULL, auto which automatically searches for ID feature, and manual specification. For best performance specify ID features
 #' @param problemType [character | Optional] Machine learning problem type, options are: binary, multi, regression and cluster. If left as NULL but target feature provided, problem type is automatically detected. Default of NULL
 #' @param removeDupObs [character | Optional] Should duplicate observations be removed using the ID features detected or specified. Default of TRUE
 #' @param clipOutliers [logical | Optional] Should outliers be clipped by the median value. Default of TRUE
@@ -38,7 +38,7 @@
 autoML <- function(train,
                    test = NULL,
                    target = NULL,
-                   id = "auto",
+                   id = NULL,
                    removeDupObs = TRUE,
                    clipOutliers = TRUE,
                    trackingFeatures = TRUE,
