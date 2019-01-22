@@ -18,4 +18,5 @@ Some users might experience issues when installing via github, please see this l
 If you like my work and would like to support me and the future development of autoML please consider contributing via my Patreon or my PayPal account
 
 Patreon: https://www.patreon.com/user
+
 PayPal:https://www.paypal.me/XanderHorn
