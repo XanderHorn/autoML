@@ -162,9 +162,9 @@ if(perfMetric == "auto"){
   } else if(expTasks$fullTask$type == "Unsupervised"){
     metric <- metrics$dunn
     perfMetric <- "dunn"
-  } else {
+  } 
+} else {
     metric <- metrics[[which(names(metrics) == perfMetric)]]
-  }
 }
 if(verbose == TRUE){
   cat(paste0("autoLearn | Performance metric generated as: ",metric$id,"\n"))
