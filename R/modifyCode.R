@@ -21,7 +21,9 @@ modifyCode <- function(trainedModel, edaFrame, codeFrame){
                        stringsAsFactors = FALSE)
   
   
-  eda <- subset(eda, eda$Feature != trainedModel$task.desc$target)
+  if(trainedModel$task.desc$type != "cluster"){
+    eda <- subset(eda, eda$Feature != trainedModel$task.desc$target)
+  }
   eda$used <- 0
   
   for(i in 1:nrow(eda)){
