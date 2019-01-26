@@ -540,7 +540,7 @@ verbose = TRUE){
     fixed <- fixCatProportions(x = train, catFeats = charFeats, minLevelPercentage = categoricalMinPercent, autoCode = autoCode)
     train <- fixed$data
     
-    if(autoCode == TRUE){
+    if(autoCode == TRUE & length(fixed$code) > 0){
       tempCode <- data.frame(section = "Cleaning",
                              code = do.call(rbind, fixed$code))
       code <- rbind(code, tempCode)
