@@ -7,12 +7,6 @@
 generateHyperParams(learners = NULL, task, clusters = NULL,
   cores = NULL)
 }
-\arguments{
-\item{cores}{}
-}
-\value{
-
-}
 \description{
 Generates a list of hyper parameters suitable for specific learners
 }

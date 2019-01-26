@@ -6,12 +6,6 @@
 \usage{
 generateLearners(task)
 }
-\arguments{
-\item{task}{}
-}
-\value{
-
-}
 \description{
 Generates a list of mlr learners
 }

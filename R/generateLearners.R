@@ -1,12 +1,6 @@
 
 
 #' Generates a list of mlr learners
-#'
-#' @param task
-#'
-#' @return
-#'
-#' @examples
 generateLearners <- function(task){
 
   library(mlr)

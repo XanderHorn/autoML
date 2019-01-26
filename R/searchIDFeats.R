@@ -1,13 +1,6 @@
 
 #' Searches for ID features in dataset
-#'
-#' @param x
-#' @param seed
-#'
-#' @return
-#'
-#' @examples
-#'
+
 searchIDFeats <- function(x,
 							             seed = 1428571){
 

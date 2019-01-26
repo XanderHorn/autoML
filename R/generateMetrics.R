@@ -3,12 +3,7 @@
 #' Generates optimization metrics
 #'
 #' Creates a list of suitable metrics that can be used to train a model
-#'
-#' @param task
-#'
-#' @return
-#'
-#' @examples
+
 generateMetrics <- function(task){
 
   library(mlr)

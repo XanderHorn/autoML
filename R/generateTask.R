@@ -1,14 +1,5 @@
 #' Creates a mlr task
 #'
-#' @param x
-#' @param y
-#' @param maxLevels
-#' @param problemType
-#'
-#' @return mlr task object
-#'
-#' @examples
-#'
 generateTask <- function(x,
 	y = NULL,
 	maxLevels = 100, # Number of unique values in target if no problem type is specified to decide between regression and classification

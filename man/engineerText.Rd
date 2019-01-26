@@ -13,8 +13,16 @@ engineerText(x, textFeats, autoCode = TRUE)
 
 \item{autoCode}{[logical | Optional] Should code be generated when running this function}
 }
+\value{
+List of objects, containing engineered data.frame and code list if requested
+}
 \description{
 Automatically creates new features for all text features provided. Used for NLP cases
+}
+\examples{
+ new <- iris
+ new$Species <- as.character(new$Species)
+ res <- engineerText(new, "Species")
 }
 \author{
 Xander Horn

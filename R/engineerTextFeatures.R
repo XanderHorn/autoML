@@ -8,10 +8,13 @@
 #' @param textFeats [character vector | Required] Character vector containing text feature names
 #' @param autoCode [logical | Optional] Should code be generated when running this function
 #'
-#' @return
+#' @return List of objects, containing engineered data.frame and code list if requested
 #' @export
 #'
 #' @examples
+#'  new <- iris
+#'  new$Species <- as.character(new$Species)
+#'  res <- engineerText(new, "Species")
 #' @author
 #' Xander Horn
 #'

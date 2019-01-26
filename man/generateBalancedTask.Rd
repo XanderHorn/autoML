@@ -6,9 +6,6 @@
 \usage{
 generateBalancedTask(task)
 }
-\arguments{
-\item{task}{}
-}
 \description{
 Generates a balanced task using oversampling from an existing mlr task
 }

@@ -11,6 +11,7 @@
 #' @param edaFrame [data.frame | Optional] [data.frame | Optional] If the code data.frame object returned from autoPreProcess is provided along with the EDA data.frame (dataSummary) then each model will modify the code to be model specific and is returned in the model object
 #' @param problemType [character | Optional] Machine learning problem type, options are: binary, multi, regression and cluster. If left as NULL but target feature provided, problem type is automatically detected. Default of NULL
 #' @param maxLevels [integer | Optional] Number of unique values in target feature before the problem type is seen as a regression problem. Default of 100
+#' @param testSplit [numeric | Optional] Percentage of data to allocate to the test set. Stratified sampling is done. Default of 0.1
 #' @param validationSplit [numeric | Optional] Percentage of data to allocate to the validation set. Stratified sampling is done. Default of 0.3
 #' @param trainMode [character | Optional] Specifies how to train models, options are: all, full, reduced, balanced, reducedBalanced. all will use all of the other options when suitable. full trains models on all features. reduced trains models on top n features selected by a random forest. balanced trains models on all features but with oversampling the target to 50/50 proportion when the target is binary. reducedBalanced uses the top features as well as balancing the target when the target is binary. Either one or many options can be specified
 #' @param tuneIters [integer | Optional] Number of tuning iterations to search for optimal hyper parameters. Default of 10
@@ -31,7 +32,8 @@
 #' @export
 #'
 #' @examples
-#' @author 
+#' mod <- autoLearn(train = iris, target = "Species")
+#' @author
 #' Xander Horn
 autoLearn <- function(
   train,
@@ -41,6 +43,7 @@ autoLearn <- function(
   edaFrame = NULL,
   problemType = NULL,
   maxLevels = 100,
+  testSplit = 0.1,
   validationSplit = 0.3,
   trainMode = "all",
   tuneIters = 10,
@@ -117,7 +120,7 @@ if(is.null(target) == TRUE){
 train <- train[sample(nrow(train)),]
 
 if(is.null(test) == TRUE & is.null(target) == FALSE){
-  ind <- caret::createDataPartition(y = train[,target], p = 0.1, list = FALSE)
+  ind <- caret::createDataPartition(y = train[,target], p = testSplit, list = FALSE)
   test <- train[ind,]
   train <- train[-ind,]
   if(verbose == TRUE){
@@ -162,7 +165,7 @@ if(perfMetric == "auto"){
   } else if(expTasks$fullTask$type == "Unsupervised"){
     metric <- metrics$dunn
     perfMetric <- "dunn"
-  } 
+  }
 } else {
     metric <- metrics[[which(tolower(names(metrics)) == tolower(perfMetric))]]
 }
@@ -352,9 +355,9 @@ for(i in 1:nrow(results)){
       model$model <- mlr::train(learner = mod, task = trainTask)
       model$tuneData <- generateHyperParsEffectData(tuned, partial.dep = TRUE)
       modelPlots$LearningCurve <- plotLearningCurve(generateLearningCurveData(learners = mod, task = tuneTask, measures = metric)) +
-                    ggtitle("Learning curve analysis") + 
+                    ggtitle("Learning curve analysis") +
                     theme_light() +
-                    xlab("Percentage of data used for training") + 
+                    xlab("Percentage of data used for training") +
                     ylab(metric$id)
 
       if(verbose == TRUE){
@@ -423,7 +426,7 @@ for(i in 1:nrow(results)){
 
       model$probCutoff <- tuned$threshold
       modelPlots$Calibration <- plotCalibration(generateCalibrationData(p.train)) +
-                    theme_light() + 
+                    theme_light() +
                     ggtitle("Model calibration")
 
       if(length(unique(train[,target])) == 2){

@@ -6,12 +6,6 @@
 \usage{
 generateMetrics(task)
 }
-\arguments{
-\item{task}{}
-}
-\value{
-
-}
 \description{
 Creates a list of suitable metrics that can be used to train a model
 }

@@ -6,15 +6,6 @@
 \usage{
 generateTask(x, y = NULL, maxLevels = 100, problemType = NULL)
 }
-\arguments{
-\item{problemType}{}
-}
-\value{
-mlr task object
-}
 \description{
 Creates a mlr task
-}
-\examples{
-
 }

@@ -6,15 +6,6 @@
 \usage{
 searchIDFeats(x, seed = 1428571)
 }
-\arguments{
-\item{seed}{}
-}
-\value{
-
-}
 \description{
 Searches for ID features in dataset
-}
-\examples{
-
 }

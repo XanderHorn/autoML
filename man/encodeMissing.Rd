@@ -22,6 +22,9 @@ List containing data.frame with encoded features as well as code when autoCode i
 \description{
 Changes the way in which missing values are represented within features. Various systems uses different reserved values for missing data, this function uses the most common reserved values and replaces them with NA
 }
+\examples{
+res <- encodeMissing(x = iris[,1:4])
+}
 \author{
 Xander Horn
 }

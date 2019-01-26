@@ -1,13 +1,5 @@
 #' Stratified down sampling
-#'
-#' @param x
-#' @param y
-#' @param maxObs
-#' @param seed
-#'
-#' @return
-#'
-#' @examples
+
 autoSample <- function(x, y = NULL, maxObs = 40000, seed = 1991){
 
   library(caret)

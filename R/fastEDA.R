@@ -1,14 +1,7 @@
 
 #' Fast exploratory data analysis
 #'
-#' @param x
-#' @param numChars
-#' @param seed
-#'
-#' @return
-#'
-#' @examples
-#'
+
 fastEDA <- function(x, numChars = 25, seed = 1991){
 
 	set.seed(seed)

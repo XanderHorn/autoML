@@ -1,11 +1,7 @@
 
 
 #' Generates a balanced task using oversampling from an existing mlr task
-#'
-#' @param task
-#'
-#' @return
-#' @examples
+
 generateBalancedTask <- function(task){
 
   library(mlr)

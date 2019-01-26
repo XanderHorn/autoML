@@ -1,15 +1,7 @@
 
 
 #' Generates a list of hyper parameters suitable for specific learners
-#'
-#' @param learners
-#' @param task
-#' @param clusters
-#' @param cores
-#'
-#' @return
-#'
-#' @examples
+
 generateHyperParams <- function(learners = NULL, task, clusters = NULL, cores = NULL){
 
   library(mlr)

@@ -6,8 +6,8 @@
 \usage{
 autoLearn(train, test = NULL, target = NULL, codeFrame = NULL,
   edaFrame = NULL, problemType = NULL, maxLevels = 100,
-  validationSplit = 0.3, trainMode = "all", tuneIters = 10,
-  tuneType = "random", perfMetric = "auto",
+  testSplit = 0.1, validationSplit = 0.3, trainMode = "all",
+  tuneIters = 10, tuneType = "random", perfMetric = "auto",
   performResampling = FALSE, resampleMethod = "CV",
   resampleIters = 5, topFeatures = 30, models = "all",
   clusters = NULL, cores = NULL, maxObs = 40000, verbose = TRUE,
@@ -27,6 +27,8 @@ autoLearn(train, test = NULL, target = NULL, codeFrame = NULL,
 \item{problemType}{[character | Optional] Machine learning problem type, options are: binary, multi, regression and cluster. If left as NULL but target feature provided, problem type is automatically detected. Default of NULL}
 
 \item{maxLevels}{[integer | Optional] Number of unique values in target feature before the problem type is seen as a regression problem. Default of 100}
+
+\item{testSplit}{[numeric | Optional] Percentage of data to allocate to the test set. Stratified sampling is done. Default of 0.1}
 
 \item{validationSplit}{[numeric | Optional] Percentage of data to allocate to the validation set. Stratified sampling is done. Default of 0.3}
 
@@ -63,6 +65,9 @@ List of trained models each containing unque information relating to the machine
 }
 \description{
 Automated training, tuning and validation of machine learning models. Models are  tuned and resampling validated on an experiment set, trained on the full set and validated and testing on external sets. Classification models tune the probability threshold automatically and returns the results. Each model contains information of performance, the trained model as well as some plots.
+}
+\examples{
+mod <- autoLearn(train = iris, target = "Species")
 }
 \author{
 Xander Horn

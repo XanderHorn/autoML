@@ -15,6 +15,7 @@
 #' @param unsupervisedFeatures [logical | Optional] Should unsupervised features be cretead for numeric and integer feature. Uses k-means to create clusters on a feature and then calculates the distance to the center which is the final feature. Default of TRUE
 #' @param modelInterpretability [logical | Optional] Should model interpretability plots be produced for supervised models
 #' @param trainMode [character | Optional] Specifies how to train models, options are: all, full, reduced, balanced, reducedBalanced. all will use all of the other options when suitable. full trains models on all features. reduced trains models on top n features selected by a random forest. balanced trains models on all features but with oversampling the target to 50/50 proportion when the target is binary. reducedBalanced uses the top features as well as balancing the target when the target is binary. Either one or many options can be specified
+#' @param topFeatures [integer | Optional] Top performing features as identified by the random forest model and used in the reduced training methods. Default of 30, if the training set has less than 30 features 50% of the top features will be used
 #' @param models [character | Optional] Which models to train. Default of all. Available models can be seen by calling availableLearners(). Either one or many options can be specified
 #' @param tuneIters [integer | Optional] Number of tuning iterations to search for optimal hyper parameters. Default of 10
 #' @param tuneType [character | Optional] Tune method applied, options are: random and frace. random uses random tuning and frace uses iterated f-racing algorithm for the best solution. Default of random
@@ -25,6 +26,7 @@
 #' @param clusters [integer | Optional] For unsupervised problems, the number of clusters to optimize for. Default of NULL which will search for the best optimized number of clusters
 #' @param perfMetric [character | Optional] Optimization metric on which to train and validate the model. Default of NULL wuill automatically select a metric, else for avaialble metrics use the function availableMetrcs()
 #' @param maxObs [integer | Optional] Number of observations in the experiment training set on which models are trained, tuned and resampled on. Default of 40000. If the training set has less than 40k observations all will be used
+#' @param testSplit [numeric | Optional] Percentage of data to allocate to the test set. Stratified sampling is done. Default of 0.1
 #' @param validationSplit [numeric | Optional] Percentage of data to allocate to the validation set. Stratified sampling is done. Default of 0.3
 #' @param seed [integer | Optional] Random number seed for reproducible results
 #' @param verbose [logical | Optional] Chatty function or not. Default of TRUE
@@ -47,6 +49,7 @@ autoML <- function(train,
                    unsupervisedFeatures = TRUE,
                    modelInterpretability = FALSE,
                    trainMode = "reduced",
+                   topFeatures = 30,
                    models = "all",
                    tuneIters = 10,
                    tuneType = "random",
@@ -55,6 +58,7 @@ autoML <- function(train,
                    resampleIters = 5,
                    sample = NULL,
                    maxObs = 40000,
+                   testSplit = 0.1,
                    validationSplit = 0.3,
                    problemType = NULL,
                    clusters = NULL,
@@ -135,8 +139,10 @@ autoML <- function(train,
                       models = models,
                       tuneIters = tuneIters,
                       maxObs = maxObs,
+                      testSplit = testSplit,
                       validationSplit = validationSplit,
                       problemType = problemType,
+                      topFeatures = topFeatures,
                       tuneType = tuneType,
                       performResampling = performResampling,
                       resampleMethod = resampleMethod,

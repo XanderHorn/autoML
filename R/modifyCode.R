@@ -10,85 +10,88 @@
 #' @export
 #'
 #' @examples
+#' res <- autoPreProcess(train = iris, target = "Species")
+#' models <- autoLearn(train = res$data, target = "Species", trainMode = "reduced")
+#' code <- modifyCode(trainedModel = models$RandomForest_reduced$model, edaFrame = res$dataSummary, codeFrame = res$code)
 #' @author Xander Horn
 #'
 modifyCode <- function(trainedModel, edaFrame, codeFrame){
   code <- codeFrame
   eda <- edaFrame
-  
+
   lookup <- data.frame(FeaturesUsed = trainedModel$features,
                        MainFeature = NA,
                        stringsAsFactors = FALSE)
-  
-  
+
+
   if(trainedModel$task.desc$type != "cluster"){
     eda <- subset(eda, eda$Feature != trainedModel$task.desc$target)
   }
   eda$used <- 0
-  
+
   for(i in 1:nrow(eda)){
-    
+
     ind <- grep(eda[i,"Feature"], lookup$FeaturesUsed)
     lookup[ind, "MainFeature"] <- as.character(eda[i,"Feature"])
     eda[i,"used"] <- ifelse(length(grep(eda[i,"Feature"], trainedModel$features)) > 0, 1, eda$used)
   }
-  
-  
+
+
   code$keep <- ifelse(code$section %in% c("Feature names","Libraries","Options","Other","Start"),1, 0)
-  
+
   mainFeatures <- code[which(code$section %in% c("Cleaning","MissingEncode",
                                                  "NumericFormat","CharacterFormat",
                                                  "Integer64Format","DateTimeFormat",
                                                  "TextFormat","IntegerFormat",
                                                  "Scaling")),]
-  
+
   engFeatures <- code[which(!code$section %in% c("Cleaning","MissingEncode",
                                                  "NumericFormat","CharacterFormat",
                                                  "Integer64Format","DateTimeFormat",
                                                  "TextFormat","IntegerFormat",
                                                  "Scaling")),]
-  
+
   tempeda <- subset(eda, eda$used == 1)
-  
+
   for(i in 1:nrow(tempeda)){
     mainInd <- mainFeatures[grep(tempeda[i,"Feature"], mainFeatures$code),"id"]
     code$keep <- ifelse(code$id %in% mainInd, 1, code$keep)
   }
-  
+
   for(i in 1:nrow(lookup)){
-    
+
     mainInd <- mainFeatures[grep(lookup[i,"MainFeature"], mainFeatures$code),"id"]
     engInd <- engFeatures[grep(lookup[i,"FeaturesUsed"], engFeatures$code),"id"]
-   
+
     code$keep <- ifelse(code$id %in% mainInd, 1, code$keep)
     code$keep <- ifelse(code$id %in% engInd, 1, code$keep)
-    
+
   }
-  
+
   tempCode <- code[which(code$keep == 1),]
-  
+
   tempCode[which(tempCode$section == "Start"), "code"] <- "predict_autoML <- function(trainedModel, x){"
   tempCode <- tempCode[,c("section","code")]
-  
+
   temp <- list()
   temp[length(temp) + 1] <- "x <- x[,trainedModel$features]"
   temp[length(temp) + 1] <- "pred <- predict(trainedModel, newdata = x[,trainedModel$features])$data"
   temp[length(temp) + 1] <- "return(pred)}"
-  
+
   temp <- data.frame(section = "End",
                      code = do.call(rbind, temp))
-  
+
   tempCode <- rbind(tempCode, temp)
-  
-  
+
+
   temp <- tempCode[1:max(which(tempCode$section == "Libraries")),]
   tempList <- list()
   tempList[length(tempList) + 1] <- "library(mlr)"
   temp <- rbind(temp,data.frame(section = "Libraries",
                                 code = do.call(rbind, tempList)))
-  
+
   tempCode <- tempCode[(max(which(tempCode$section == "Libraries"))+1):nrow(tempCode),]
-  
+
   tempCode <- rbind(temp, tempCode)
   return(tempCode)
 }

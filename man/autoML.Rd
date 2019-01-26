@@ -4,16 +4,16 @@
 \alias{autoML}
 \title{Automated machine learning}
 \usage{
-autoML(train, test = NULL, target = NULL, id = "auto",
+autoML(train, test = NULL, target = NULL, id = NULL,
   removeDupObs = TRUE, clipOutliers = TRUE, trackingFeatures = TRUE,
   featureTransformations = TRUE, featureInteractions = TRUE,
-  unsupervisedFeatures = TRUE, modelInterpretability = TRUE,
-  trainMode = "reduced", models = "all", tuneIters = 10,
-  tuneType = "random", performResampling = FALSE,
+  unsupervisedFeatures = TRUE, modelInterpretability = FALSE,
+  trainMode = "reduced", topFeatures = 30, models = "all",
+  tuneIters = 10, tuneType = "random", performResampling = FALSE,
   resampleMethod = "CV", resampleIters = 5, sample = NULL,
-  maxObs = 40000, validationSplit = 0.3, problemType = NULL,
-  clusters = NULL, perfMetric = "auto", seed = 1991,
-  verbose = TRUE)
+  maxObs = 40000, testSplit = 0.1, validationSplit = 0.3,
+  problemType = NULL, clusters = NULL, perfMetric = "auto",
+  seed = 1991, verbose = TRUE)
 }
 \arguments{
 \item{train}{[data.frame | Required] Dataset to perform cleaning, engineering and training of models on, should contain target feature if supervised learning should be executed}
@@ -22,7 +22,7 @@ autoML(train, test = NULL, target = NULL, id = "auto",
 
 \item{target}{[character | Optional] If a target is provided classification or regression models will be trained, if left as NULL unsupervised models will be trained. Default of NULL}
 
-\item{id}{[character | Optioanl] ID features are automatically detected and removed from cleaning and engieering, the dataset is also de-duplicated accoring to the ID feature(s) specified. Default of auto, which automatically searches for ID feature. For best performance specify ID features}
+\item{id}{[character | Optioanl] ID features are automatically detected and removed from cleaning and engieering, the dataset is also de-duplicated accoring to the ID feature(s) specified. Default of NULL which will not de-duplicate, options are NULL, auto which automatically searches for ID feature, and manual specification. For best performance specify ID features}
 
 \item{removeDupObs}{[character | Optional] Should duplicate observations be removed using the ID features detected or specified. Default of TRUE}
 
@@ -40,6 +40,8 @@ autoML(train, test = NULL, target = NULL, id = "auto",
 
 \item{trainMode}{[character | Optional] Specifies how to train models, options are: all, full, reduced, balanced, reducedBalanced. all will use all of the other options when suitable. full trains models on all features. reduced trains models on top n features selected by a random forest. balanced trains models on all features but with oversampling the target to 50/50 proportion when the target is binary. reducedBalanced uses the top features as well as balancing the target when the target is binary. Either one or many options can be specified}
 
+\item{topFeatures}{[integer | Optional] Top performing features as identified by the random forest model and used in the reduced training methods. Default of 30, if the training set has less than 30 features 50% of the top features will be used}
+
 \item{models}{[character | Optional] Which models to train. Default of all. Available models can be seen by calling availableLearners(). Either one or many options can be specified}
 
 \item{tuneIters}{[integer | Optional] Number of tuning iterations to search for optimal hyper parameters. Default of 10}
@@ -52,9 +54,11 @@ autoML(train, test = NULL, target = NULL, id = "auto",
 
 \item{resampleIters}{[integer | Optional] Number of folds or bootstrap iterations to validate the model on}
 
-\item{sample}{[numeric | Optional] Number between 0 and 1 to sample observations for faster model interpretability. Default of NULL}
+\item{sample}{[numeric | Optional] Number between 0 and 1 to sample observations for faster model interpretability. Default of NULL which will use 1000 observations}
 
 \item{maxObs}{[integer | Optional] Number of observations in the experiment training set on which models are trained, tuned and resampled on. Default of 40000. If the training set has less than 40k observations all will be used}
+
+\item{testSplit}{[numeric | Optional] Percentage of data to allocate to the test set. Stratified sampling is done. Default of 0.1}
 
 \item{validationSplit}{[numeric | Optional] Percentage of data to allocate to the validation set. Stratified sampling is done. Default of 0.3}
 

@@ -6,15 +6,6 @@
 \usage{
 fastEDA(x, numChars = 25, seed = 1991)
 }
-\arguments{
-\item{seed}{}
-}
-\value{
-
-}
 \description{
 Fast exploratory data analysis
-}
-\examples{
-
 }

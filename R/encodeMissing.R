@@ -11,6 +11,7 @@
 #' @export
 #'
 #' @examples
+#' res <- encodeMissing(x = iris[,1:4])
 #' @author
 #' Xander Horn
 encodeMissing <- function(x,

@@ -6,12 +6,6 @@
 \usage{
 autoSample(x, y = NULL, maxObs = 40000, seed = 1991)
 }
-\arguments{
-\item{seed}{}
-}
-\value{
-
-}
 \description{
 Stratified down sampling
 }
