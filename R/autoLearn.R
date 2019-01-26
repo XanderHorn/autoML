@@ -164,7 +164,7 @@ if(perfMetric == "auto"){
     perfMetric <- "dunn"
   } 
 } else {
-    metric <- metrics[[which(names(metrics) == perfMetric)]]
+    metric <- metrics[[which(tolower(names(metrics)) == tolower(perfMetric))]]
 }
 if(verbose == TRUE){
   cat(paste0("autoLearn | Performance metric generated as: ",metric$id,"\n"))
