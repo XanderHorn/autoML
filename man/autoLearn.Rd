@@ -20,9 +20,9 @@ autoLearn(train, test = NULL, target = NULL, codeFrame = NULL,
 
 \item{target}{[character | Optional] If a target is provided classification or regression models will be trained, if left as NULL unsupervised models will be trained. Default of NULL}
 
-\item{codeFrame}{[data.frame | Optional] If the code data.frame object returned from autoPreProcess is provided along with the EDA data.frame (dataSummary) then each model will modify the code to be model specific and is returned in the model object}
+\item{codeFrame}{[data.frame | Optional] If the code data.frame object returned from autoPreProcess is provided along with the EDA data.frame "dataSummary" then each model will modify the code to be model specific and is returned in the model object}
 
-\item{edaFrame}{[data.frame | Optional] [data.frame | Optional] If the code data.frame object returned from autoPreProcess is provided along with the EDA data.frame (dataSummary) then each model will modify the code to be model specific and is returned in the model object}
+\item{edaFrame}{[data.frame | Optional] [data.frame | Optional] If the code data.frame object returned from autoPreProcess is provided along with the EDA data.frame "dataSummary" then each model will modify the code to be model specific and is returned in the model object}
 
 \item{problemType}{[character | Optional] Machine learning problem type, options are: binary, multi, regression and cluster. If left as NULL but target feature provided, problem type is automatically detected. Default of NULL}
 
@@ -38,7 +38,7 @@ autoLearn(train, test = NULL, target = NULL, codeFrame = NULL,
 
 \item{tuneType}{[character | Optional] Tune method applied, options are: random and frace. random uses random tuning and frace uses iterated f-racing algorithm for the best solution. Default of random}
 
-\item{perfMetric}{[character | Optional] Optimization metric on which to train and validate the model. Default of NULL wuill automatically select a metric, else for avaialble metrics use the function availableMetrcs()}
+\item{perfMetric}{[character | Optional] Optimization metric on which to train and validate the model. Default of NULL wuill automatically select a metric, else for avaialble metrics use the function availableMetrcs}
 
 \item{performResampling}{[logical | Optional] Should resampling be performed after tuning of the model have taken place. Default of FALSE}
 
@@ -48,7 +48,7 @@ autoLearn(train, test = NULL, target = NULL, codeFrame = NULL,
 
 \item{topFeatures}{[integer | Optional] Top performing features as identified by the random forest model and used in the reduced training methods. Default of 30, if the training set has less than 30 features 50% of the top features will be used}
 
-\item{models}{[character | Optional] Which models to train. Default of all. Available models can be seen by calling availableLearners(). Either one or many options can be specified}
+\item{models}{[character | Optional] Which models to train. Default of all. Available models can be seen by calling availableLearners. Either one or many options can be specified}
 
 \item{clusters}{[integer | Optional] For unsupervised problems, the number of clusters to optimize for. Default of NULL which will search for the best optimized number of clusters}
 
@@ -64,7 +64,7 @@ autoLearn(train, test = NULL, target = NULL, codeFrame = NULL,
 List of trained models each containing unque information relating to the machine learning problem type
 }
 \description{
-Automated training, tuning and validation of machine learning models. Models are  tuned and resampling validated on an experiment set, trained on the full set and validated and testing on external sets. Classification models tune the probability threshold automatically and returns the results. Each model contains information of performance, the trained model as well as some plots.
+Automated training, tuning and validation of machine learning models. Models are  tuned and resampling validated on an experiment set and trained on the full set and validated and testing on external sets. Classification models tune the probability threshold automatically and returns the results. Each model contains information of performance, the trained model as well as some plots.
 }
 \examples{
 mod <- autoLearn(train = iris, target = "Species")

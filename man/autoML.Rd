@@ -22,7 +22,7 @@ autoML(train, test = NULL, target = NULL, id = NULL,
 
 \item{target}{[character | Optional] If a target is provided classification or regression models will be trained, if left as NULL unsupervised models will be trained. Default of NULL}
 
-\item{id}{[character | Optioanl] ID features are automatically detected and removed from cleaning and engieering, the dataset is also de-duplicated accoring to the ID feature(s) specified. Default of NULL which will not de-duplicate, options are NULL, auto which automatically searches for ID feature, and manual specification. For best performance specify ID features}
+\item{id}{[character | Optioanl] ID features are automatically detected and removed from cleaning and engieering, the dataset is also de-duplicated accoring to the ID features specified. Default of NULL which will not de-duplicate, options are NULL, auto which automatically searches for ID feature, and manual specification. For best performance specify ID features}
 
 \item{removeDupObs}{[character | Optional] Should duplicate observations be removed using the ID features detected or specified. Default of TRUE}
 
@@ -40,9 +40,9 @@ autoML(train, test = NULL, target = NULL, id = NULL,
 
 \item{trainMode}{[character | Optional] Specifies how to train models, options are: all, full, reduced, balanced, reducedBalanced. all will use all of the other options when suitable. full trains models on all features. reduced trains models on top n features selected by a random forest. balanced trains models on all features but with oversampling the target to 50/50 proportion when the target is binary. reducedBalanced uses the top features as well as balancing the target when the target is binary. Either one or many options can be specified}
 
-\item{topFeatures}{[integer | Optional] Top performing features as identified by the random forest model and used in the reduced training methods. Default of 30, if the training set has less than 30 features 50% of the top features will be used}
+\item{topFeatures}{[integer | Optional] Top performing features as identified by the random forest model and used in the reduced training methods. Default of 30, if the training set has less than 30 features 50 percent of the top features will be used}
 
-\item{models}{[character | Optional] Which models to train. Default of all. Available models can be seen by calling availableLearners(). Either one or many options can be specified}
+\item{models}{[character | Optional] Which models to train. Default of all. Available models can be seen by calling availableLearners. Either one or many options can be specified}
 
 \item{tuneIters}{[integer | Optional] Number of tuning iterations to search for optimal hyper parameters. Default of 10}
 
@@ -66,7 +66,7 @@ autoML(train, test = NULL, target = NULL, id = NULL,
 
 \item{clusters}{[integer | Optional] For unsupervised problems, the number of clusters to optimize for. Default of NULL which will search for the best optimized number of clusters}
 
-\item{perfMetric}{[character | Optional] Optimization metric on which to train and validate the model. Default of NULL wuill automatically select a metric, else for avaialble metrics use the function availableMetrcs()}
+\item{perfMetric}{[character | Optional] Optimization metric on which to train and validate the model. Default of NULL wuill automatically select a metric, else for avaialble metrics use the function availableMetrcs}
 
 \item{seed}{[integer | Optional] Random number seed for reproducible results}
 
