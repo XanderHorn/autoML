@@ -737,12 +737,9 @@ verbose = TRUE){
     } else {
       intrFeats <- numFeats
     }
-  }
-  
-  print("intrFeats")                                    
-  print(intrFeats)  
-  print("numFeats")
-  print(numFeats)                                    
+  } else {
+    intrFeats <- numFeats
+  }                                  
   
   if(length(numFeats) > 0){
     if(featureInteractions == TRUE & length(intrFeats) >= 2){ # Interactions generates duplicates, must fix
