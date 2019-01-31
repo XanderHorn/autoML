@@ -739,6 +739,11 @@ verbose = TRUE){
     }
   }
   
+  print("intrFeats")                                    
+  print(intrFeats)  
+  print("numFeats")
+  print(numFeats)                                    
+  
   if(length(numFeats) > 0){
     if(featureInteractions == TRUE & length(intrFeats) >= 2){ # Interactions generates duplicates, must fix
       cat("autoPreProcess | Computing interactions \n")
