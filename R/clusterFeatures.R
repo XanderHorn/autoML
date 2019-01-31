@@ -92,7 +92,10 @@ distanceToCenter <- function(x, numFeats, clusters = 10, autoCode = TRUE, progre
   code[[length(code) + 1]] <- "\n"
   temp$cluster <- NULL
 
-  temp <- temp[,setdiff(names(temp), numFeats)]
+  temp <- as.data.frame(temp[,setdiff(names(temp), numFeats)])
+  if(length(numFeats) == 1){
+  	names(temp) <-  paste0("XEC_Dist_",feat)
+  }
 
   if(autoCode == FALSE){
     return(list(feats = temp))
