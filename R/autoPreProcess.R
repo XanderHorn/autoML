@@ -536,7 +536,7 @@ verbose = TRUE){
     train <- train$feats
   }
   
-  if(length(charFeats) > 0){
+  if(length(charFeats) > 0 & categoricalMinPercent > 0){
     fixed <- fixCatProportions(x = train, catFeats = charFeats, minLevelPercentage = categoricalMinPercent, autoCode = autoCode)
     train <- fixed$data
     
