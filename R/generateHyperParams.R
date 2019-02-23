@@ -18,19 +18,19 @@ generateHyperParams <- function(learners = NULL, task, clusters = NULL, cores = 
 
 		mtry <- round(sqrt(sum(task$task$task.desc$n.feat)))
 
-		hypers$XgBoost <- makeParamSet(makeIntegerParam("max_depth", lower = 4, upper = 10),
+		hypers$XgBoost <- makeParamSet(makeIntegerParam("max_depth", lower = 2, upper = 10),
 			               makeNumericParam("min_child_weight", lower = 0, upper = 20),
 			               makeNumericParam("gamma",lower = 0, upper = 10),
 			               makeNumericParam("lambda",lower = 0, upper = 10),
 			               makeNumericParam("eta", lower = 0.03, upper = 0.1),
 			               makeNumericParam("subsample",lower = 0.25, upper = 0.9),
 			               makeNumericParam("colsample_bytree", lower = 0.4, upper = 0.9),
-			               makeIntegerParam("nrounds", lower = 50, upper = 500),
+			               makeDiscreteParam("nrounds", values = 10000),
 			               makeDiscreteParam("early_stopping_rounds", values = 10))
 
 		hypers$RandomForest <- makeParamSet(makeIntegerParam("mtry", lower = 2, upper = mtry),
-								makeIntegerParam("min.node.size", lower = 1, upper = 10),
-								makeIntegerParam("num.trees", lower = 80, upper = 300),
+								makeIntegerParam("min.node.size", lower = 5, upper = 10),
+								makeIntegerParam("num.trees", lower = 80, upper = 600),
 								makeDiscreteParam("num.threads", values = cores))
 
 		hypers$Lasso <- makeParamSet(makeIntegerParam("nlambda", lower = 0, upper = 100),
@@ -47,9 +47,9 @@ generateHyperParams <- function(learners = NULL, task, clusters = NULL, cores = 
 
 		hypers$NaiveBayes <- makeParamSet(makeNumericParam("laplace", lower = 0, upper = 300))
 
-		hypers$Rpart <- makeParamSet(makeNumericParam("cp", lower = 0.001, upper = 1),
-							makeIntegerParam("minbucket", lower = 1, upper = 10),
-							makeIntegerParam("maxdepth", lower = 4, upper = 15))
+		hypers$Rpart <- makeParamSet(makeNumericParam("cp", lower = 0.001, upper = 0.01),
+							makeIntegerParam("minbucket", lower = 5, upper = 10),
+							makeIntegerParam("maxdepth", lower = 2, upper = 15))
 
 		hypers$PenalizedRegr <- makeParamSet(makeNumericParam("lambda1", lower = 0, upper = 100),
 									makeNumericParam("lambda2", lower = 0,  upper = 100))
