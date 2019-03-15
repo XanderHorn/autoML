@@ -99,6 +99,7 @@ autoML <- function(train,
     lookup <- train[,c("ind","automl_temp_id")]
     train$ind <- NULL
     test$ind <- NULL
+    id <- c(id, "automl_temp_id")
   }
 
   ready <- autoPreProcess(train = train,
@@ -110,13 +111,13 @@ autoML <- function(train,
                           featureTransformations = featureTransformations,
                           featureInteractions = featureInteractions,
                           unsupervisedFeatures = unsupervisedFeatures,
-                          removeIDFeatures = TRUE,
+                          removeIDFeatures = FALSE,
                           seed = seed,
                           verbose = verbose)
 
-  #if(is.null(target) == FALSE){
-  #  target <- make.names(target)
-  #}
+  if(is.null(target) == FALSE){
+    target <- make.names(target)
+  }
 
   if(is.null(test) == FALSE){
     train <- merge(x = train,
@@ -125,7 +126,7 @@ autoML <- function(train,
                    all.x = TRUE)
     test <- subset(train, train$ind == "test")
     train <- subset(train, train$ind == "train")
-    remove <- c("ind","automl_temp_id")
+    remove <- c("ind","automl_temp_id",id)
     test <- test[,setdiff(names(test), remove)]
     train <- train[,setdiff(names(train), remove)]
   }
