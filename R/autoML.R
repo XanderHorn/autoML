@@ -120,7 +120,7 @@ autoML <- function(train,
   }
 
   if(is.null(test) == FALSE){
-    train <- merge(x = train,
+    train <- merge(x = ready$data,
                    y = lookup,
                    by.x = "automl_temp_id",
                    all.x = TRUE)
@@ -131,7 +131,7 @@ autoML <- function(train,
     train <- train[,setdiff(names(train), remove)]
   }
 
-  models <- autoLearn(train = ready$data,
+  models <- autoLearn(train = train,
                       target = target,
                       test = test,
                       codeFrame = ready$code,
