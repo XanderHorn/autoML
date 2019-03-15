@@ -114,9 +114,9 @@ autoML <- function(train,
                           seed = seed,
                           verbose = verbose)
 
-  if(is.null(target) == FALSE){
-    target <- make.names(target)
-  }
+  #if(is.null(target) == FALSE){
+  #  target <- make.names(target)
+  #}
 
   if(is.null(test) == FALSE){
     train <- merge(x = train,
