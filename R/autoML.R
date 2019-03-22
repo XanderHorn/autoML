@@ -118,6 +118,10 @@ autoML <- function(train,
   if(is.null(target) == FALSE){
     target <- make.names(target)
   }
+  
+  if(is.null(test) == TRUE){
+    train <- train[,setdiff(names(train), id)]
+  }
 
   if(is.null(test) == FALSE){
     train <- merge(x = ready$data,
