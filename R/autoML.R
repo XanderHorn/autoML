@@ -120,6 +120,7 @@ autoML <- function(train,
   }
   
   if(is.null(test) == TRUE){
+    train <- ready$data
     train <- train[,setdiff(names(train), id)]
   }
 
