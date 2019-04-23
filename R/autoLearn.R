@@ -407,8 +407,8 @@ for(i in 1:nrow(results)){
   p.train$data$truth <- train[,target]
 
   if(tuneTask$task.desc$type != "cluster"){
-      results[i, "Train"] <- round(performance(pred = p.train, task = trainTask, measures = metric, model = model$model)[[1]], 4)
-      results[i, "Test"] <- round(performance(pred = p.test, task = trainTask, measures = metric, model = model$model)[[1]], 4)
+      results[i, "Train"] <- round(mlr::performance(pred = p.train, task = trainTask, measures = metric, model = model$model)[[1]], 4)
+      results[i, "Test"] <- round(mlr::performance(pred = p.test, task = trainTask, measures = metric, model = model$model)[[1]], 4)
   } else {
       results$Test <- NULL
   }
