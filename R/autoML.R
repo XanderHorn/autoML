@@ -119,13 +119,10 @@ autoML <- function(train,
     target <- make.names(target)
   }
   
-  if(is.null(test) == TRUE){
-    train <- ready$data
-    train <- train[,setdiff(names(train), id)]
-  }
+  train <- ready$data
 
   if(is.null(test) == FALSE){
-    train <- merge(x = ready$data,
+    train <- merge(x = train,
                    y = lookup,
                    by.x = "automl_temp_id",
                    all.x = TRUE)
