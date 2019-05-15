@@ -172,5 +172,5 @@ autoML <- function(train,
   return(list(train = train,
               test = test,
               trainedModels = models$trainedModels,
-              result = models$results))
+              results = models$results))
 }
