@@ -159,7 +159,7 @@ autoML <- function(train,
 
     for(i in 1:length(models$trainedModels)){
       cat(paste0("autoInterpret | Model interpretability: ",names(models$trainedModels)[i]),"\n")
-      int <- autoInterpret(train = train,
+      int <- autoInterpret(train = train[,setdiff(names(train), id)],
                            trainedModel = models$trainedModels[[i]]$model,
                            sample = sample,
                            seed = seed,
