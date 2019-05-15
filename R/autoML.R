@@ -131,12 +131,12 @@ autoML <- function(train,
                    all.x = TRUE)
     test <- subset(train, train$ind == "test")
     train <- subset(train, train$ind == "train")
-    remove <- c("ind","automl_temp_id",id)
+    remove <- c("ind","automl_temp_id")
     test <- test[,setdiff(names(test), remove)]
     train <- train[,setdiff(names(train), remove)]
   }
 
-  models <- autoLearn(train = train,
+  models <- autoLearn(train = train[,setdiff(names(train), id)],
                       target = target,
                       test = test,
                       codeFrame = ready$code,
@@ -172,7 +172,8 @@ autoML <- function(train,
 
   }
 
-  return(list(data = ready$data,
+  return(list(train = train,
+              test = test,
               trainedModels = models$trainedModels,
               result = models$results))
 }
