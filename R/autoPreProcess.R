@@ -263,10 +263,10 @@ verbose = TRUE){
   cat(paste0("autoPreProcess | Removed ", orig - ncol(train), " features containing only missing values \n"))
   
   
-  orig <- ncol(train)
-  remove <- as.character(eda[which(eda$Duplicated == 1),1])
-  train <- train[,setdiff(names(train), remove)]
-  cat(paste0("autoPreProcess | Removed ", orig - ncol(train), " duplicated features \n"))
+  #orig <- ncol(train)
+  #remove <- as.character(eda[which(eda$Duplicated == 1),1])
+  #train <- train[,setdiff(names(train), remove)]
+  #cat(paste0("autoPreProcess | Removed ", orig - ncol(train), " duplicated features \n"))
   
   
   removed <- unique(as.character(eda[which(eda$Duplicated == 1 | eda$Constant == 1 | eda$AllMissing == 1),1]))
