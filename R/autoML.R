@@ -99,7 +99,7 @@ autoML <- function(train,
     lookup <- train[,c("ind","automl_temp_id")]
     train$ind <- NULL
     test$ind <- NULL
-    id <- c(id, "automl_temp_id")
+    id <- c(id, "automl_temp_id",make.names(id))
   }
 
   ready <- autoPreProcess(train = train,
