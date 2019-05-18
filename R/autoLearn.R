@@ -76,11 +76,6 @@ if(missing(train) == TRUE){
   stop("No training data provided")
 }
 
-#if(is.null(target) == FALSE & !target %in% names(train)){
-# stop("Target feature not found in train set")
-#}
-
-
 if(is.null(target) == FALSE & any(trainMode %in% c("all","reduced","balancedReduced")) & ncol(train) < 10){
   topFeatures <- ncol(train)
 }
@@ -216,8 +211,6 @@ if(expTasks$fullTask$type %in% c("Binary classification","Multi class classifica
 if(verbose == TRUE){
   cat("autoLearn | Validation set generated \n")
 }
-
-
 
 if(any(trainMode %in% c("reduced","balancedReduced"))){
 
