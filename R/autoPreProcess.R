@@ -156,19 +156,19 @@ verbose = TRUE){
     target <- make.names(target)
   }
   
-  if(is.null(id) == FALSE){
-    if(length(id) > 0){
-      if(any(id == "auto") == FALSE){
-        id <- make.names(id)
-        }      
-      }
-    }
-  
   #if(is.null(id) == FALSE){
-  #  if(id != "auto" & length(id) > 0){
+  #  if(length(id) > 0){
+  #    if(any(id == "auto") == FALSE){
   #      id <- make.names(id)
+  #      }      
+  #    }
   #  }
-  #}
+  
+  if(is.null(id) == FALSE){
+    if(id != "auto" & length(id) > 0){
+        id <- make.names(id)
+    }
+  }
   
   names(train) <- make.names(names(train))
   code[length(code$code) + 1, 2] <- "names(x) <- make.names(names(x))"
