@@ -80,8 +80,10 @@ autoML <- function(train,
     stop("Provide data to function")
   }
   
-  id <- c(id, make.names(id))
-
+  if(is.null(id) == FALSE){
+    id <- c(id, make.names(id))
+  }
+  
   if(is.null(target) == TRUE){
     trackingFeatures <- FALSE
     featureTransformations <- FALSE
