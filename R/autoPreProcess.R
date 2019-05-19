@@ -177,7 +177,7 @@ verbose = TRUE){
     }
   }
   
-  suppressWarnings(if(id == "auto" & is.null(id) == FALSE){
+  suppressWarnings(if(id == "auto" && is.null(id) == FALSE){
       
       id <- searchIDFeats(x = train, seed = seed)
       if(length(id) > 0){
