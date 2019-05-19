@@ -137,9 +137,14 @@ autoML <- function(train,
     train <- train[,setdiff(names(train), remove)]
   }
 
-  models <- autoLearn(train = train[,setdiff(names(train), id)],
+  remove <- data.frame(var = names(train),
+                     class = as.character(sapply(train, class)))
+
+  remove <- as.character(remove[which(remove$class %in% c("factor","character","integer64")),1])
+  
+  models <- autoLearn(train = train[,setdiff(names(train), c(id, remove))],
                       target = target,
-                      test = test[,setdiff(names(test), id)],
+                      test = test[,setdiff(names(test), c(id, remove))],
                       codeFrame = ready$code,
                       edaFrame = ready$dataSummary,
                       trainMode = trainMode,
