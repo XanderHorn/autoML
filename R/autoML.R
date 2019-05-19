@@ -139,7 +139,7 @@ autoML <- function(train,
 
   models <- autoLearn(train = train[,setdiff(names(train), id)],
                       target = target,
-                      test = test,
+                      test = test[,setdiff(names(test), id)],
                       codeFrame = ready$code,
                       edaFrame = ready$dataSummary,
                       trainMode = trainMode,
