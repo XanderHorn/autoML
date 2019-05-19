@@ -156,7 +156,11 @@ verbose = TRUE){
     target <- make.names(target)
   }
   
-  id <- make.names(id)
+  if(is.null(id) == FALSE){
+    if(id != "auto" & length(id) > 0){
+      id <- make.names(id)
+    }
+  }
   
   names(train) <- make.names(names(train))
   code[length(code$code) + 1, 2] <- "names(x) <- make.names(names(x))"
@@ -177,7 +181,8 @@ verbose = TRUE){
     }
   }
   
-  suppressWarnings(if(id == "auto" && is.null(id) == FALSE){
+  if(is.null(id) == FALSE){
+    suppressWarnings(if(id == "auto" & is.null(id) == FALSE){
       
       id <- searchIDFeats(x = train, seed = seed)
       if(length(id) > 0){
@@ -188,6 +193,7 @@ verbose = TRUE){
         removeDupObs <- FALSE
       }
     })
+  }
   
   if(is.null(id) == TRUE){
     removeDupObs <- FALSE
