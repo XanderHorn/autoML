@@ -139,7 +139,7 @@ autoML <- function(train,
 
   remove <- data.frame(var = names(train),
                      class = as.character(sapply(train, class)))
-
+  remove <- subset(remove, remove$var != target)
   remove <- as.character(remove[which(remove$class %in% c("factor","character","integer64")),1])
   
   models <- autoLearn(train = train[,setdiff(names(train), c(id, remove))],
