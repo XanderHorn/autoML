@@ -30,13 +30,14 @@ featureImportance <- function(train, trainedModel, seed = 1234, sample = 0.1){
   feats <- trainedModel$features
   y <- trainedModel$task.desc$target
   temp <- train[caret::createDataPartition(y = train[, y], p = sample, list = FALSE), ]
-  temp[,y] <- as.numeric(temp[,y])
+  
   
   predObj <- Predictor$new(model = trainedModel, data = temp[,feats], y = temp[, y])
   
   if(trainedModel$task.desc$type == "classif"){
     imp <- iml::FeatureImp$new(predictor = predObj, loss = "ce", parallel = TRUE)
   } else {
+    temp[,y] <- as.numeric(temp[,y])
     imp <- iml::FeatureImp$new(predictor = predObj, loss = "mae", parallel =  TRUE)
   }
   
