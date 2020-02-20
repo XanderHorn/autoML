@@ -14,8 +14,6 @@ featureImportance(train, trainedModel, seed = 1991, topFeats = NULL,
 
 \item{seed}{[integer | Optional] Random seed number for reproducable results. Default of 1991}
 
-\item{topFeats}{[integer | Optional] The top number of features to limit feature importance to. Default of all features}
-
 \item{sample}{[numeric | Optional] A number between 0 - 1 to sub-sample the training set for faster computational time. Default of 0.1}
 }
 \value{
