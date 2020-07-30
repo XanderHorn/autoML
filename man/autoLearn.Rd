@@ -63,7 +63,9 @@ autoLearn(
 
 \item{resampleIters}{[integer | Optional] Number of folds or bootstrap iterations to validate the model on}
 
-\item{topFeatures}{[integer | Optional] Top performing features as identified by the random forest model and used in the reduced training methods. Default of 30, if the training set has less than 30 features 50% of the top features will be used}
+\item{topFeatures}{[integer | Optional] Top performing features as identified by the random forest model and used in the reduced training methods. Default of 30, if the training set has less than 30 features 50 percent of the top features will be used}
+
+\item{models}{[character | Optional] Which models to train. Default of all. Available models can be seen by calling availableLearners. Either one or many options can be specified}
 
 \item{clusters}{[integer | Optional] For unsupervised problems, the number of clusters to optimize for. Default of NULL which will search for the best optimized number of clusters}
 
