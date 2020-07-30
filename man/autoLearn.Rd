@@ -4,14 +4,31 @@
 \alias{autoLearn}
 \title{Automated machine learning training of models}
 \usage{
-autoLearn(train, test = NULL, target = NULL, codeFrame = NULL,
-  edaFrame = NULL, problemType = NULL, maxLevels = 100,
-  testSplit = 0.1, validationSplit = 0.3, trainMode = "all",
-  tuneIters = 10, tuneType = "random", perfMetric = "auto",
-  performResampling = FALSE, resampleMethod = "CV",
-  resampleIters = 5, topFeatures = 30, models = "all",
-  clusters = NULL, cores = NULL, maxObs = 40000, verbose = TRUE,
-  seed = 1991)
+autoLearn(
+  train,
+  test = NULL,
+  target = NULL,
+  codeFrame = NULL,
+  edaFrame = NULL,
+  problemType = NULL,
+  maxLevels = 100,
+  testSplit = 0.1,
+  validationSplit = 0.3,
+  trainMode = "all",
+  tuneIters = 10,
+  tuneType = "random",
+  perfMetric = "auto",
+  performResampling = FALSE,
+  resampleMethod = "CV",
+  resampleIters = 5,
+  topFeatures = 30,
+  models = "all",
+  clusters = NULL,
+  cores = NULL,
+  maxObs = 40000,
+  verbose = TRUE,
+  seed = 1991
+)
 }
 \arguments{
 \item{train}{[data.frame | Required] Training set}
